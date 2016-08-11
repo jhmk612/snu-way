@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm, SearchForm
@@ -11,6 +12,7 @@ def index(request):
 @login_required
 def lend_list(request):
     lend_list=Post.objects.all()
+
     if request.method=='GET':
         s=SearchForm(request.GET)
 

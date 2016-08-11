@@ -30,10 +30,13 @@
                         <a class="page-scroll" href="#team">팀 소개</a>
                     </li>
                     <li>
+
                         <a class="page-scroll" href="{% url "blog:lend" %}">빌려주기</a>
-                    </li>
+                                            </li>
                     <li>
+
                         <a class="page-scroll" href="{% url "blog:lend_list" %}">빌리기</a>
+
                     </li>
                     {% if user.is_authenticated %}
                     <li>
@@ -63,9 +66,11 @@
             <div class="intro-text">
                 <div class="intro-lead-in">퍼스널 모빌리티 대여 서비스</div>
                 <div class="intro-heading">스누웨이</div>
+
                 <a href="{% url "blog:lend" %}" class="page-scroll btn btn-xl">빌려주기</a>
-                <b>　　　　</b>
+                <b>　</b>
                 <a href="{% url "blog:lend_list" %}" class="page-scroll btn btn-xl">빌리기</a>
+
             </div>
         </div>
     </header>
