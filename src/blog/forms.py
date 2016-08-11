@@ -8,13 +8,14 @@ class PostForm(forms.ModelForm):
         fields = [
             "title",
             "vehicle",
-            "price",
+
             "content",
             "latlng",
+            "price",
             'location',
             # 캘린더
         ]
-        labels={'title': '제목', 'vehicle':'기기종류', 'price':'가격', 'content': '내용', 'latlng':'대여위치', 'location':'지역 태그'}
+        labels={'title': '제목', 'vehicle':'기기종류', 'content': '내용', 'latlng':'대여위치', 'price':'가격', 'location':'지역 태그'}
         widgets={
             'latlng':DaumMapWidget,
         }

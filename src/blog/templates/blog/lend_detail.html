@@ -1,3 +1,29 @@
+<div id="map" style="width:500px;height:500px;"></div>
+<p><em></em></p>
+
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=492212d75d7c632d0c41684dc332b0b6"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 divd
+    mapOption = {
+
+        center: new daum.maps.LatLng({{instance.lat}}, {{instance.lng}}), // 지도의 중심좌표
+        level: 5 // 지도의 확대 레벨
+    };
+
+var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 마커가 표시될 위치입니다
+var markerPosition = new daum.maps.LatLng({{instance.lat}}, {{instance.lng}});
+
+// 마커를 생성합니다
+var marker = new daum.maps.Marker({
+    position: markerPosition
+});
+
+// 마커가 지도 위에 표시되도록 설정합니다
+marker.setMap(map);
+
+</script>
 {{instance.user}} <br />
 {{instance.price}} <br />
 {{instance.content}} <br />
