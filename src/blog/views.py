@@ -46,10 +46,10 @@ def lend(request):
         form = PostForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.user = request.user
+            instance.author = request.user
             instance.save()
 
-            return redirect("blog:lend_list")
+            return redirect("blog:lend_detail", lend_id=instance.pk)
     else:
         form = PostForm()
 

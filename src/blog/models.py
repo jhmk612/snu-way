@@ -40,7 +40,7 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
     vehicle = models.ForeignKey(Vehicle)
     price = models.IntegerField(help_text='30분 이용 가격')
-    latlng = models.CharField(max_length=50, validators=[lnglat_validator], help_text='위도, 경도 포맷으로 입력', default='37.4624015, 126.9520365')
+    latlng = models.CharField(max_length=50, validators=[lnglat_validator], default='37.4624015, 126.9520365')
     location=models.ForeignKey(Location, default=1)
     # 캘린더 필드
     content = models.TextField()
