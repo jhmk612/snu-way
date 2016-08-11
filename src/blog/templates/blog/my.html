@@ -89,11 +89,14 @@ $('#myTab a[href="#account"]').tab('show')
         <div class="tab-content col-sm-3">
             <div role="tabpanel" class="tab-pane active" id="account">
                 <h1>회원정보</h1>
-                <h3>이름 : {{user.username}}</h3>
+                <h3>아이디 : {{user.username}}</h3>
+                <h3>이름 : {{user.last_name}}{{user.first_name}}</h3>
+                <h3>평점 : {{ratings.ratings}}</h3>
                 <ul>내가 게시한 글 <br />
                 {% for post in user_posts %}
 
                     <a href="{% url "blog:lend_detail" post.id %}"><li>{{post.title}}</li></a>
+
                 {% endfor %}
                 </ul>
             </div>
