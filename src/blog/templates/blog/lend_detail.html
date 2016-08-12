@@ -1,5 +1,72 @@
-<div id="map" style="width:500px;height:500px;"></div>
+{% extends 'blog/base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<div id="page-top" class="index">
+    <nav id="mainNav" class="navbar navbar-default navbar-custom1 navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> 메뉴 <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="{% url "blog:index" %}">스누웨이</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{% url "blog:index" %}">홈</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#lend">빌려주기</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{% url "blog:lend_list" %}">빌리기</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a class="page-scroll" href="{% url "blog:my_page" user.id %}">마이페이지</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{% url "logout" %}?next={{ request.path }}">로그아웃</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a class="page-scroll" href="{% url "login" %}?next={{ request.path }}">로그인</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{% url "signup" %}">회원가입</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</div>
+<section id="lend_detail">
+<div class="container">
+<div class="row">
+<div class="col-sm-10 col-sm-offset-1">
+<table>
+<tr>
+<td><h1>{{instance.title}}</h1></td>
+<td>{{instance.author}}</td>
+</tr>
+</table>
+<div id="map" style="width:50%;height:300px;"></div>
 <p><em></em></p>
+ <br />
+{{instance.price}} <br />
+{{instance.content}} <br />
+
 
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=492212d75d7c632d0c41684dc332b0b6"></script>
 <script>
@@ -24,7 +91,38 @@ var marker = new daum.maps.Marker({
 marker.setMap(map);
 
 </script>
-{{rating}}
-{{instance.author}} <br />
-{{instance.price}} <br />
-{{instance.content}} <br />
+<font color='#fed136' size='5'>{{value|floatformat:2}}</font>
+{% for rate in ratings %}
+<table>
+<tr>
+<td>{{rate.writer.last_name}}{{rate.writer.first_name}}({{rate.writer.username}})</td></tr>
+<tr>
+<td><font color='#fed136'>{{rate.ratings}}</font></td>
+{% if request.user == rate.writer %}
+
+<td><font size= '0.5px'>답글 수정하기 / 삭제</font></td>
+{% endif %}
+</tr>
+<tr>
+<td>
+{{rate.review}}
+</td>
+
+
+<hr>
+{% endfor %}
+</tr>
+</table>
+<hr>
+
+<form action='' method="post">
+{% csrf_token %}
+{% bootstrap_form form%}
+
+<input type="submit" value="후기 작성">
+</form>
+</div>
+</div>
+</div>
+</section>
+{%endblock%}

@@ -66,8 +66,9 @@ class Post(models.Model):
 
 class Rating(models.Model):
     post=models.ForeignKey(Post, default=1)
-    ratings=models.DecimalField(max_digits=3, decimal_places=2, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    ratings=models.DecimalField(max_digits=3, decimal_places=2, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)], help_text='5점 만점')
     review=models.TextField(blank=True)
+    writer=models.ForeignKey(settings.AUTH_USER_MODEL)
 
     def post_rat_avg(self):
         return Rating.objects.filter(post=self.post).aggregate(Avg('ratings'))

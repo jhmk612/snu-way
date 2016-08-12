@@ -175,10 +175,13 @@ var positions = [
     {% for lend in lend_list %}
 
 
+
     {
     latlng: new daum.maps.LatLng({{lend.lat}}, {{lend.lng}}),
-    content: '<div style="width:150px;text-align:center;padding:6px 0;"><p>제목</p> <p><{{lend.title}}></p><p>대여자: {{lend.author.last_name}}{{lend.author.first_name}}</p><p>기기종류: {{lend.vehicle}}</p><p>지역: {{lend.location}}</p><p>가격: {{lend.price}}</p><br><a type="button" href="{% url "blog:lend_detail" lend.pk %}" class="btn btn-primary">빌리러 가기!</a></div>'
+    content: '<div style="width:150px;text-align:center;padding:6px 0;"><p>제목</p> <p><{{lend.title}}></p><p>대여자: {{lend.author.last_name}}{{lend.author.first_name}}</p><p>기기종류: {{lend.vehicle}}</p><p>지역: {{lend.location}}</p><p>가격: {{lend.price}}</p>{% for i in values.count %}<p>평점: {{values.i}}</p>{% endfor %}<br><a type="button" href="{% url "blog:lend_detail" lend.pk %}" class="btn btn-primary">빌리러 가기!</a></div>'
     },
+
+
 
 
     {% endfor %}

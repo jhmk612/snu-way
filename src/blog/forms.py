@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Rating
 from .widgets import DaumMapWidget
 
 class PostForm(forms.ModelForm):
@@ -38,3 +38,8 @@ class SearchForm(forms.Form):
     location=forms.ChoiceField(choices=TAG_CHOICES, required=False, label='대여지역')
     price=forms.IntegerField(required=False, label='최고가격')
 
+class RatingForm(forms.ModelForm):
+    class Meta:
+        model=Rating
+        fields=['ratings', 'review']
+        labels={'ratings':'평가하기', 'review':'후기'}
