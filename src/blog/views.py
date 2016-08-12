@@ -28,16 +28,20 @@ def lend_list(request):
         if price:
             lend_list=lend_list.filter(price__lte=price)
 
-
+        ratings=Rating.objects.filter(post=lend_list)
 
 
     return render(request, 'blog/lend_list.html', {'lend_list':lend_list, 'form':s})
 
+
+
 @login_required
 def lend_detail(request, lend_id):
     instance = get_object_or_404(Post, pk=lend_id)
+    rating = Rating.objects.filter(post_id=lend_id).aggregate(Avg('ratings'))
     context = {
         "instance":instance,
+        'rating':rating
     }
     return render(request, 'blog/lend_detail.html', context)
 
@@ -61,12 +65,16 @@ def lend(request):
 
 def my_page(request, pk):
     user = User.objects.get(pk=pk)
-    ratings = Rating.objects.filter(user=pk)
     user_posts = Post.objects.filter(author=pk)
+    length=len(user_posts)
+    ratings = Rating.objects.filter(post=user_posts)
+    user_rat_avg=Rating.objects.filter(post=user_posts).aggregate(Avg('ratings'))
     context = {
     "user":user,
     "user_posts":user_posts,
-    'ratings':ratings
+    'ratings':ratings,
+    'user_rat_avg':user_rat_avg,
+    'range': range(length)
     }
     return render(request, "blog/my.html", context)
 

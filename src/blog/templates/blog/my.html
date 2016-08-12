@@ -91,11 +91,22 @@ $('#myTab a[href="#account"]').tab('show')
                 <h1>회원정보</h1>
                 <h3>아이디 : {{user.username}}</h3>
                 <h3>이름 : {{user.last_name}}{{user.first_name}}</h3>
-                <h3>평점 : {{ratings.ratings}}</h3>
-                <ul>내가 게시한 글 <br />
-                {% for post in user_posts %}
 
-                    <a href="{% url "blog:lend_detail" post.id %}"><li>{{post.title}}</li></a>
+                <h3>평점 : {{user_rat_avg}}</h3>
+
+                <ul>내가 게시한 글 <br />
+
+
+                    {% for post in user_posts%}
+                    <table>
+                    <tr>
+                    <td><a href="{% url "blog:lend_detail" post.id %}">{{post.title}}</a></td>
+                    {% for rating in ratings %}
+
+                    <td>{{rating.0}}</td>
+                    {% endfor %}
+                    </tr>
+                    </table>
 
                 {% endfor %}
                 </ul>

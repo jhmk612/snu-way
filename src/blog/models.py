@@ -35,14 +35,6 @@ def lnglat_validator(lnglat):
         raise forms.ValidationError('Invalid LngLat Type')
 
 
-class Rating(models.Model):
-
-    ratings=models.DecimalField(max_digits=3, decimal_places=2, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    review=models.TextField()
-
-    def rat_avg(self):
-        return Rating.objects.aggregate(Avg('ratings'))
-
 
 
 class Post(models.Model):
@@ -57,7 +49,7 @@ class Post(models.Model):
     publish = models.DateField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
-    rating = models.ForeignKey(Rating)
+
 
     def lat(self):
         return self.latlng.split(',')[0]
@@ -72,5 +64,12 @@ class Post(models.Model):
         return self.title
 
 
+class Rating(models.Model):
+    post=models.ForeignKey(Post, default=1)
+    ratings=models.DecimalField(max_digits=3, decimal_places=2, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    review=models.TextField(blank=True)
+
+    def post_rat_avg(self):
+        return Rating.objects.filter(post=self.post).aggregate(Avg('ratings'))
 
 
